@@ -1,5 +1,5 @@
 # WARV
-Warv /var:v/ or Webapplikations Ramverk is a lightweight web application framework designed for high-performance and concurrent web services. Built on top of the [may](https://github.com/Xudong-Huang/may), which provides coroutine-based concurrency in Rust, Warv leverages this capability to efficiently handle multiple connections with minimal overhead. 
+Warv [/var:v/] or Webapplikations Ramverk is a lightweight web application framework designed for high-performance and concurrent web services. Built on top of the [may](https://github.com/Xudong-Huang/may), which provides coroutine-based concurrency in Rust, Warv leverages this capability to efficiently handle multiple connections with minimal overhead. 
 
 ### Key features:
 #### Concurrency with may:
