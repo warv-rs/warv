@@ -1,0 +1,22 @@
+documentation:
+  image: rust:latest
+  script:
+    - cargo doc --no-deps --lib --release
+  artifacts:
+    paths:
+      - target/doc
+  only:
+    - merge_requests
+   # - main
+
+pages:
+  needs: [ documentation ]
+  image: alpine
+  script:
+    - mkdir -p public
+    - cp -r target/doc public/documentation
+  artifacts:
+    paths:
+      - public
+ # only:
+  #  - main
