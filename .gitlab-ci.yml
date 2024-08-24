@@ -1,16 +1,21 @@
+stages:
+  - pages
+
 documentation:
-  image: rust:latest
+  image: rust
+  stage: pages
   script:
     - cargo doc --no-deps --lib --release
   artifacts:
     paths:
       - target/doc
-  only:
-    - merge_requests
+  #only:
+   # - merge_requests
    # - main
 
 pages:
   needs: [ documentation ]
+  stage: pages
   image: alpine
   script:
     - mkdir -p public
