@@ -19,7 +19,7 @@ pages:
   image: alpine
   script:
     - mkdir -p public
-    - cp -r target/doc public/documentation
+    - cp -r target/doc public
   artifacts:
     paths:
       - public
