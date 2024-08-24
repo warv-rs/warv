@@ -1,0 +1,20 @@
+[package]
+name = "warv" #Webapplikations Ramverk
+version = "0.1.0"
+authors = ["warv contributors"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "High performance web application framework"
+readme = "README.md"
+keywords = ["warv","http", "web", "framework"]
+categories = ["asynchronous", "network-programming", "web-programming::http-server"]
+exclude = [
+    ".gitignore",
+]
+
+[dependencies]
+chrono = "0.4.38"
+log = "0.4.22"
+may = "0.3.46"
+regex = "1.10.6"
+rustls = { version = "0.23.12", features = ["std"] }
