@@ -1,6 +1,5 @@
 # WARV
 Warv [/var:v/] or Webapplikations Ramverk is a lightweight web application framework designed for high-performance and concurrent web services. Built on top of the [may](https://github.com/Xudong-Huang/may), which provides coroutine-based concurrency in Rust, Warv leverages this capability to efficiently handle multiple connections with minimal overhead. 
-
 ### Key features:
 #### Concurrency with may:
 Warv utilizes may's coroutine-based concurrency model, enabling it to handle a large number of concurrent connections efficiently. may's lightweight coroutines allow Warv to avoid the overhead associated with traditional threading models, making it highly scalable.
@@ -24,3 +23,11 @@ Warv integrates with [rustls](https://github.com/rustls/rustls) to provide secur
 
 #### Static File Serving:
 Warv includes functionality to serve static files and directories, making it suitable for use cases like hosting static websites or serving assets in a dynamic application.
+
+
+
+## License
+Warv is licensed under either of the following, at your option:
+
+ * The Apache License v2.0.0 ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0);
+ * The MIT License ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT).
