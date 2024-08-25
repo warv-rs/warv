@@ -9,9 +9,9 @@ documentation:
   artifacts:
     paths:
       - target/doc
-  #only:
-   # - merge_requests
-   # - main
+  only:
+    - merge_requests
+    - main
 
 pages:
   needs: [ documentation ]
@@ -23,5 +23,5 @@ pages:
   artifacts:
     paths:
       - public
- # only:
-  #  - main
+  only:
+    - main
