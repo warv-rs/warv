@@ -8,7 +8,7 @@ pub trait Middleware: Send + Sync {
     fn handle(
         &self,
         req: Request,
-        state: Option<Arc<dyn State + 'static>>,
+        state: State,
         next: &dyn Handler,
     ) -> Response;
 }

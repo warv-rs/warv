@@ -21,7 +21,7 @@ impl Middleware for LoggingMiddleware {
         req: Request,
         //  path_params: HashMap<String, String>,
         //  query_params: Option<HashMap<String, String>>,
-        state: Option<Arc<dyn State>>,
+        state: State,
         next: &dyn Handler,
     ) -> Response {
         // Log request details

@@ -60,7 +60,7 @@ impl CorsMiddleware {
 }
 
 impl Middleware for CorsMiddleware {
-    fn handle(&self, req: Request, state: Option<Arc<dyn State>>, next: &dyn Handler) -> Response {
+    fn handle(&self, req: Request, state:State, next: &dyn Handler) -> Response {
         if let Some(origin) = req.headers().get("Origin") {
             let origin = origin.as_str();
 

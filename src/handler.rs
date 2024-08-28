@@ -8,7 +8,7 @@ pub trait Handler: Send + Sync {
     fn handle(
         &self,
         req: Request,
-        state: Option<Arc<dyn State + 'static>>,
+        state: State,
     ) -> Response;
 }
 
@@ -30,7 +30,7 @@ pub enum HandlerType {
         Box<
             dyn Fn(
                     Request,
-                    Option<Arc<dyn State>>,
+                    State,
                 ) -> Response
                 + Send
                 + Sync,
@@ -42,7 +42,7 @@ impl Handler for HandlerType {
     fn handle(
         &self,
         req: Request,
-        state: Option<Arc<dyn State>>,
+        state: State,
     ) -> Response {
         match self {
             HandlerType::Stateless(handler) => handler(req ),
