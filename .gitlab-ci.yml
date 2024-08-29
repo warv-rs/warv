@@ -1,25 +1,41 @@
 stages:
-  - pages
+  - test
+  - check
+  - publish
 
-documentation:
+tests:
+  stage: test
   image: rust
-  stage: pages
+  script:
+    - cargo test
+
+build:amd64:
+  stage: check
+  image: rust
+  script:
+    - cargo check
+  artifacts:
+    paths:
+      - target/release/rust-gitlab-example
+
+rustdoc:
+  stage: check
+  image: rust
   script:
     - cargo doc --no-deps --lib --release
   artifacts:
     paths:
       - target/doc
-  only:
-    - merge_requests
-    - main
-
+    
 pages:
-  needs: [ documentation ]
-  stage: pages
+  stage: publish
   image: alpine
+  dependencies:
+    - build:amd64
+    - rustdoc
   script:
     - mkdir -p public
-    - cp -r target/doc/* public
+    - mv target/doc/* public/
   artifacts:
     paths:
       - public
