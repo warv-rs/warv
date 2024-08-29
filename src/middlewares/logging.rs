@@ -1,7 +1,6 @@
 use crate::http::Request;
 use crate::middleware::Middleware;
 use log::info;
-use std::sync::Arc;
 use crate::handler::Handler;
 use crate::http::Response;
 use crate::state::State;

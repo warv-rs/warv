@@ -2,7 +2,6 @@ use crate::handler::Handler;
 use crate::http::{Method, Request};
 use crate::middleware::Middleware;
 use crate::state::State;
-use std::sync::Arc;
 
 use crate::http::Response;
 

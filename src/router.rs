@@ -14,7 +14,6 @@ use crate::http::Response;
 use crate::middlewarewrapper::MiddlewareWrapper;
 use crate::state::State;
 use crate::handler::HandlerType;
-use std::any::Any;
 
 
 /// Router struct

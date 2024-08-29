@@ -16,7 +16,7 @@ impl State{
         let inner = Arc::new(obj);
         self.inner= inner;
     }
-    pub fn inner<T: std::fmt::Debug + 'static + std::marker::Sync+ std::marker::Send>(&self) -> Option<Arc<T>>{
+    pub fn inner<T:'static + std::marker::Sync+ std::marker::Send>(&self) -> Option<Arc<T>>{
         let inner = self.inner.clone();
         match inner.downcast::<T>() {
             Ok(i) => {

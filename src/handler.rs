@@ -1,6 +1,5 @@
 use crate::state::State;
 use crate::http::Request;
-use std::sync::Arc;
 use crate::http::Response;
 
 
