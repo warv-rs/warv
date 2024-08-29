@@ -15,12 +15,13 @@ use crate::middlewarewrapper::MiddlewareWrapper;
 use crate::state::State;
 use crate::handler::HandlerType;
 
+
 /// Router struct
 #[derive(Clone)]
 pub struct Router {
     routes: HashMap<Method, Vec<(Regex, Arc<dyn Handler>)>>,
     middlewares: Vec<Arc<dyn Middleware>>,
-    state: Option<Arc<dyn State>>,
+    state: State,
     static_dir: Option<String>,
     default_handler: Option<Arc<dyn Handler>>,
 }
@@ -30,7 +31,7 @@ impl Router {
         Router {
             routes: HashMap::new(),
             middlewares: Vec::new(),
-            state: None,
+            state: State::new(),
             static_dir: None,
             default_handler: None,
         }
@@ -55,7 +56,7 @@ impl Router {
     /// Add a stateful route / handler function.
     pub fn add_stateful_route<F>(&mut self, method: Method, path: &str, handler: F) -> Result<(),Box<dyn Error>> 
     where
-        F: Fn(Request, Option<Arc<dyn State + 'static>>) -> Response + Send + Sync + 'static,
+        F: Fn(Request, State) -> Response + Send + Sync + 'static,
     {
         let regex = Regex::new(&format!(
             "^{}$",
@@ -91,11 +92,10 @@ impl Router {
         self.middlewares.push(Arc::new(middleware));
     }
     /// Add a state to the router and the defined routes
-    pub fn set_state<S>(&mut self, state: S)
-    where
-        S: State + 'static,
+    //TODO 
+    pub fn set_state<T: 'static + Send + Sync>(&mut self, state:T )
     {
-        self.state = Some(Arc::new(state));
+        self.state.set(state);
     }
     /// Serve a static directory
     pub fn set_static_dir(&mut self, dir: String) {
@@ -104,7 +104,7 @@ impl Router {
     /// Set a default route for all requests missing a route
     pub fn set_default_handler<F>(&mut self, handler: impl Handler + 'static)
     where
-        F: Fn(Request, Option<Arc<dyn State>>) -> Response + Send + Sync + 'static,
+        F: Fn(Request, State) -> Response + Send + Sync + 'static,
     {
         self.default_handler = Some(Arc::new(handler));
     }

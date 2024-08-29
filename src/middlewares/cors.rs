@@ -2,7 +2,6 @@ use crate::handler::Handler;
 use crate::http::{Method, Request};
 use crate::middleware::Middleware;
 use crate::state::State;
-use std::sync::Arc;
 
 use crate::http::Response;
 
@@ -60,7 +59,7 @@ impl CorsMiddleware {
 }
 
 impl Middleware for CorsMiddleware {
-    fn handle(&self, req: Request, state: Option<Arc<dyn State>>, next: &dyn Handler) -> Response {
+    fn handle(&self, req: Request, state:State, next: &dyn Handler) -> Response {
         if let Some(origin) = req.headers().get("Origin") {
             let origin = origin.as_str();
 

@@ -14,7 +14,7 @@ impl Handler for MiddlewareWrapper {
     fn handle(
         &self,
         req: Request,
-        state: Option<Arc<dyn State + 'static>>,
+        state: State,
     ) -> Response {
         self.middleware.handle(req, state, &*self.next)
     }
