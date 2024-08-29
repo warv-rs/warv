@@ -9,15 +9,12 @@ tests:
   script:
     - cargo test
 
-build:amd64:
+check:amd64:
   stage: check
   image: rust
   script:
     - cargo check
-  artifacts:
-    paths:
-      - target/release/rust-gitlab-example
-
+    
 rustdoc:
   stage: check
   image: rust
@@ -31,7 +28,6 @@ pages:
   stage: publish
   image: alpine
   dependencies:
-    - build:amd64
     - rustdoc
   script:
     - mkdir -p public
