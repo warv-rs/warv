@@ -13,7 +13,6 @@ Warv includes a robust middleware system, enabling developers to insert custom l
 
 #### State Management:
 Warv's routing system allows for optional state injection, meaning handlers can operate with or without state depending on the use case.
-State is managed and passed around using `Arc<dyn State>`, providing flexibility while maintaining thread safety.
 
 #### Request Handling:
 Warv supports complex request handling scenarios, including path parameter extraction and query parsing. This allows for dynamic and customizable request processing, catering to various web application needs.

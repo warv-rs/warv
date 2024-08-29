@@ -1,7 +1,6 @@
 use crate::http::Request;
 use crate::middleware::Middleware;
 use log::info;
-use std::sync::Arc;
 use crate::handler::Handler;
 use crate::http::Response;
 use crate::state::State;
@@ -21,7 +20,7 @@ impl Middleware for LoggingMiddleware {
         req: Request,
         //  path_params: HashMap<String, String>,
         //  query_params: Option<HashMap<String, String>>,
-        state: Option<Arc<dyn State>>,
+        state: State,
         next: &dyn Handler,
     ) -> Response {
         // Log request details
