@@ -1,8 +1,8 @@
 use crate::error::Error;
 use crate::http::Method;
 use crate::http::Request;
-use crate::router::Router;
 use crate::http::Response;
+use crate::router::Router;
 use log::error;
 use log::info;
 
@@ -13,9 +13,9 @@ use std::io::{Read, Write};
 use std::str::from_utf8;
 use std::sync::Arc;
 
-const BUFFER_SIZE: usize = 512;
+const BUFFER_SIZE: usize = 1024 * 30;
 
-fn handle_client( mut stream: may::net::TcpStream,     router: Vec<Router>) {
+fn handle_client(mut stream: may::net::TcpStream, router: Vec<Router>) {
     let mut buffer = [0; BUFFER_SIZE];
     loop {
         match stream.read(&mut buffer) {
@@ -23,14 +23,14 @@ fn handle_client( mut stream: may::net::TcpStream,     router: Vec<Router>) {
             Ok(bytes_read) => match parse_request(&buffer[0..bytes_read]) {
                 Ok(request) => {
                     let mut response = None;
-                    for r in &router{
+                    for r in &router {
                         let resp = r.handle_request(request.clone());
-                        if resp.is_some(){
+                        if resp.is_some() {
                             response = resp.clone();
                             break;
                         }
                     }
-                    let response = match response{
+                    let response = match response {
                         Some(r) => r,
                         None => Response::not_found(),
                     };
@@ -72,14 +72,14 @@ fn handle_client_tls(
             Ok(bytes_read) => match parse_request(&buffer[0..bytes_read]) {
                 Ok(request) => {
                     let mut response = None;
-                    for r in &router{
+                    for r in &router {
                         let resp = r.handle_request(request.clone());
-                        if resp.is_some(){
+                        if resp.is_some() {
                             response = resp.clone();
                             break;
                         }
                     }
-                    let response = match response{
+                    let response = match response {
                         Some(r) => r,
                         None => Response::not_found(),
                     };
@@ -170,7 +170,7 @@ impl Server {
     pub fn new() -> Self {
         Server {
             workers: 4,
-            stack_size: 256  * 1024,
+            stack_size: 256 * 1024,
             router: Vec::new(),
         }
     }
@@ -186,10 +186,8 @@ impl Server {
     }
     ///Add a router to the server
     ///Additional routers can be added to the server.
-    pub fn add_router(&mut self, router:Router) {
-
+    pub fn add_router(&mut self, router: Router) {
         self.router.push(router);
-
     }
     /// Start the server.
     pub fn run(&self, addr: &str) -> std::io::Result<()> {
@@ -201,17 +199,13 @@ impl Server {
             let router = self.router.clone();
             info!("Connection {:?}", saddr);
             go!(move || {
-                handle_client(stream,router.clone());
+                handle_client(stream, router.clone());
             });
         }
         Ok(())
     }
-    ///Start server with TLS configuration 
-    pub fn run_tls(
-        &self,
-        addr: &str,
-        tls_config: Arc<ServerConfig>,
-    ) -> std::io::Result<()> {
+    ///Start server with TLS configuration
+    pub fn run_tls(&self, addr: &str, tls_config: Arc<ServerConfig>) -> std::io::Result<()> {
         may::config().set_workers(self.workers);
         may::config().set_stack_size(self.stack_size * 1024);
 
